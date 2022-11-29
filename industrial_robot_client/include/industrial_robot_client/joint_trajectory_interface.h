@@ -269,6 +269,7 @@ private:
    */
   bool jointTrajectoryCB(industrial_msgs::CmdJointTrajectory::Request &req,
                          industrial_msgs::CmdJointTrajectory::Response &res);
+  void checkConnection();
 };
 
 } //joint_trajectory_interface

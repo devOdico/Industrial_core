@@ -33,6 +33,8 @@
 #include "industrial_robot_client/joint_trajectory_interface.h"
 #include "simple_message/joint_traj_pt.h"
 #include "industrial_utils/param_utils.h"
+#include <chrono>
+#include <thread>
 
 using namespace industrial_utils::param;
 using industrial::simple_message::SimpleMessage;
@@ -74,7 +76,26 @@ bool JointTrajectoryInterface::init(std::string default_ip, int default_port)
   default_tcp_connection_.init(ip_addr, port);
   free(ip_addr);
 
-  return init(&default_tcp_connection_);
+  bool res = init(&default_tcp_connection_);
+  std::thread checkConnectionThread(&JointTrajectoryInterface::checkConnection, this);
+  checkConnectionThread.detach();
+  return res;
+}
+
+void JointTrajectoryInterface::checkConnection(){
+  JointTrajPtMessage jMsg;
+  SimpleMessage msg, reply;
+  jMsg.setSequence(SpecialSeqValues::CHECK_CONNECTION);
+  jMsg.toRequest(msg);
+  
+  while(true){
+    this->connection_->sendMsg(msg);
+    if(!this->connection_->isConnected()){
+      this->connection_->makeConnect();
+      std::this_thread::sleep_for(std::chrono::seconds(5));
+    }
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+  }
 }
 
 bool JointTrajectoryInterface::init(SmplMsgConnection* connection)
