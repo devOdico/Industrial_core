@@ -53,6 +53,7 @@ namespace SpecialSeqValues
 {
 enum SpecialSeqValue
 {
+  CHECK_CONNECTION = 0, ///< Checking connection
   START_TRAJECTORY_DOWNLOAD  = -1, ///< Downloading drivers only: signal start of trajectory
   START_TRAJECOTRY_STREAMING = -2, ///< deprecated, please use START_TRAJECTORY_STREAMING instead
   START_TRAJECTORY_STREAMING = -2, ///< Streaming drivers only: signal start of trajectory
