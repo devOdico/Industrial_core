@@ -77,8 +77,9 @@ bool JointTrajectoryInterface::init(std::string default_ip, int default_port)
   free(ip_addr);
 
   bool res = init(&default_tcp_connection_);
-  std::thread checkConnectionThread(&JointTrajectoryInterface::checkConnection, this);
-  checkConnectionThread.detach();
+  // std::thread
+  // checkConnectionThread(&JointTrajectoryInterface::checkConnection, this);
+  // checkConnectionThread.detach();
   return res;
 }
 

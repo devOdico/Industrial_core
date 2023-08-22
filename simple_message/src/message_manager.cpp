@@ -138,23 +138,21 @@ void MessageManager::spinOnce()
   SimpleMessage msg;
   MessageHandler* handler = NULL;
 
-  if(!this->getConnection()->isConnected())
-  {
-    ROS_ERROR("SpinOnce connection failed");
-    this->getCommsFaultHandler()->connectionFailCB();
+  if (!this->getConnection()->isConnected()) {
+      this->getCommsFaultHandler()->connectionFailCB();
   }
 
   LOG_WARN("try to rec message");
   if (this->getConnection()->receiveMsg(msg))
   {
-    ROS_WARN("Message recieved");
-    LOG_COMM("Message received");
-    handler = this->getHandler(msg.getMessageType());
+      ROS_WARN("Message recieved");
+      LOG_COMM("Message received");
+      handler = this->getHandler(msg.getMessageType());
 
-    if (NULL != handler)
-    {
-      LOG_DEBUG("Executing handler callback for message type: %d", handler->getMsgType());
-      handler->callback(msg);
+      if (NULL != handler) {
+        LOG_DEBUG("Executing handler callback for message type: %d",
+                  handler->getMsgType());
+        handler->callback(msg);
     }
     else
     {
@@ -199,8 +197,7 @@ void MessageManager::spin()
 #endif
   {
     this->spinOnce();
-    
-    ROS_ERROR("SpinOnce while loop");
+
     // Throttle loop speed if waiting for a re-connection
     if (!this->getConnection()->isConnected())
       mySleep(5);
