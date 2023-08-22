@@ -121,6 +121,7 @@ namespace industrial
         buffer.init();
         while (remainBytes > 0 && (timeout_ms < 0 || remainTimeMs > 0))
         {
+          ROS_ERROR("rec bytes while loop");
           // Polling the socket results in an "interruptable" socket read.  This
           // allows Control-C to break out of a socket read.  Without polling,
           // a sig-term is required to kill a program in a socket read function.

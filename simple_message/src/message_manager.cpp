@@ -144,9 +144,10 @@ void MessageManager::spinOnce()
     this->getCommsFaultHandler()->connectionFailCB();
   }
 
-  LOG_ERROR("try to rec message");
+  LOG_WARN("try to rec message");
   if (this->getConnection()->receiveMsg(msg))
   {
+    ROS_WARN("Message recieved");
     LOG_COMM("Message received");
     handler = this->getHandler(msg.getMessageType());
 
