@@ -199,7 +199,7 @@ void MessageManager::spin()
   {
     this->spinOnce();
     
-    ROS_ERROR("SpinOnce while looop");
+    ROS_ERROR("SpinOnce while loop");
     // Throttle loop speed if waiting for a re-connection
     if (!this->getConnection()->isConnected())
       mySleep(5);
