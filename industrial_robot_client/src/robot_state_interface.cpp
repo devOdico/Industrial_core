@@ -91,6 +91,7 @@ bool RobotStateInterface::init(SmplMsgConnection* connection)
 
 bool RobotStateInterface::init(SmplMsgConnection* connection, std::vector<std::string>& joint_names)
 {
+  ROS_ERROR("state server 1");
   this->joint_names_ = joint_names;
   this->connection_ = connection;
   connection_->makeConnect();
@@ -108,11 +109,13 @@ bool RobotStateInterface::init(SmplMsgConnection* connection, std::vector<std::s
       return false;
   this->add_handler(&default_robot_status_handler_);
 
+  ROS_ERROR("state server 2");
   return true;
 }
 
 void RobotStateInterface::run()
 {
+  ROS_ERROR("state server 3");
   manager_.spin();
 }
 

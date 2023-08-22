@@ -140,7 +140,7 @@ void MessageManager::spinOnce()
 
   if(!this->getConnection()->isConnected())
   {
-    LOG_ERROR("SpinOnce connection failed");
+    ROS_ERROR("SpinOnce connection failed");
     this->getCommsFaultHandler()->connectionFailCB();
   }
 
@@ -198,8 +198,8 @@ void MessageManager::spin()
 #endif
   {
     this->spinOnce();
-
-    LOG_ERROR("SpinOnce while looop");
+    
+    ROS_ERROR("SpinOnce while looop");
     // Throttle loop speed if waiting for a re-connection
     if (!this->getConnection()->isConnected())
       mySleep(5);
